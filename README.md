@@ -1,4 +1,4 @@
 # PNNL-Project
-  This is a repository for the Pacific Northwest National Laboratory radiation simulation data for use by a team of helpless CSU Channel Islands students.
+  If you select PNNL_Analysis.ipynb, a preview will be shown of the notebook, code, and graphs.
   
-  The data is SpectraMatrix.csv and our Jupyter Notebook for analyzing the data is PNNL_Analysis.ipynb. When I tried uploading/downloading between GitHub and Pycharm directly, PyCharm contributed the ".idea" folder and I'm not quite sure what it does.
+  The data provided by Luttman is SpectraMatrix.csv, the data adjusted with an x-axis as column A is SpectraMatrixWithXAxis, and our Jupyter Notebook for analyzing the data is PNNL_Analysis.ipynb.
