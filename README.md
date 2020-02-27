@@ -9,10 +9,19 @@
   
   **RadionuclideDataSlicer.py** is a short script which iterates through SpectraMatrix.csv and separates each column into their respective boxes. These boxes are **Box1.csv**, **Box2.csv**, **Box3.csv**, and **Box4.csv**. Floating point errors were introduced to several data points which is exceedingly annoying, but the introduced error doesn't change the values by more than 0.00001%, which can be seen in the Jupyter notebook **DidItSliceRightQuestionMark.ipynb**.
   
-  Lastly, **BoxIdentification.ipynb** proves that the radionuclides in each box are:
+  **BoxIdentification.ipynb** proves that the radionuclides in each box are:
   - Box 1: likely the KUT background
   - Box 2: Cobalt-60
   - Box 3: Cesium-137
   - Box 4: likely Technetium-99
+  In addition, at the end of BoxIdentification.ipynb, the peaks for each radionuclide are plotted as a heatmap, revealing the locations of the steel boxes.
   
-  It is still unknown whether the columns progress from left-to-right across the sensors in each box or weave back and forth, left-to-right then right-to-left, and it is unknown which columns correspond to the steel boxes which attenuate the source signal. All this can be revealed by plotting rows rather than columns for each box, though this has yet to be done.
+  **PerformingPCA.ipynb** is the notebook for all things PCA.
+  
+  Things still to do:
+  - Prepare slides for Luttman
+  - 3D plot of PC1 vs PC2 vs PC3
+  - Box2 + Box3 + Box4 -2\*Box1
+  - Perform NMF
+  - Perform CPT
+  
