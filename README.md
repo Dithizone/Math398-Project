@@ -14,6 +14,7 @@
   - Box 2: Cobalt-60
   - Box 3: Cesium-137
   - Box 4: likely Technetium-99
+  
   In addition, at the end of BoxIdentification.ipynb, the peaks for each radionuclide are plotted as a heatmap, revealing the locations of the steel boxes.
   
   **PerformingPCA.ipynb** is the notebook for all things PCA.
