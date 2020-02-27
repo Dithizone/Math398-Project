@@ -2,17 +2,17 @@
 
 import pandas as pd
 
-box1 = open("Box1.csv", "w")  # This will be 0, 4, 8, 12... 1760
-box2 = open("Box2.csv", "w")  # 1, 5, 9, 13... 1761
-box3 = open("Box3.csv", "w")  # 2, 6, 10, 14... 1762
-box4 = open("Box4.csv", "w")  # 3, 7, 11, 15... 1763
+box1 = open("data files/Box1.csv", "w")  # This will be 0, 4, 8, 12... 1760
+box2 = open("data files/Box2.csv", "w")  # 1, 5, 9, 13... 1761
+box3 = open("data files/Box3.csv", "w")  # 2, 6, 10, 14... 1762
+box4 = open("data files/Box4.csv", "w")  # 3, 7, 11, 15... 1763
 
-SpectraMatrix = pd.read_csv("SpectraMatrix.csv", header=None, index_col=None)
+SpectraMatrix = pd.read_csv("data files/SpectraMatrix.csv", header=None, index_col=None)
 
-file1 = open("Box1.csv", mode="w", newline="")
-file2 = open("Box2.csv", mode="w", newline="")
-file3 = open("Box3.csv", mode="w", newline="")
-file4 = open("Box4.csv", mode="w", newline="")
+file1 = open("data files/Box1.csv", mode="w", newline="")
+file2 = open("data files/Box2.csv", mode="w", newline="")
+file3 = open("data files/Box3.csv", mode="w", newline="")
+file4 = open("data files/Box4.csv", mode="w", newline="")
 
 for j in range(200):
     row = j
