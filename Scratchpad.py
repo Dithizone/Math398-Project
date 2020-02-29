@@ -18,7 +18,6 @@ Box4 = pd.read_csv("data files/Box4.csv", header=None, index_col=None)
 del Box4[441]
 # Box4.info()
 
-# file = open("SpectraMatrixByBoxes.csv", "w")
 SpectraMatrixByBoxes1 = pd.DataFrame(data=Box1)
 print(SpectraMatrixByBoxes1.head())
 SpectraMatrixByBoxes12 = pd.concat([SpectraMatrixByBoxes1, Box2], axis=1, ignore_index=True)
