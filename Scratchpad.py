@@ -1,3 +1,5 @@
+# This was a quick script to build SpectraMatrixByBoxes, and can be repurposed for other things.
+
 import pandas as pd
 import matplotlib.pyplot as plt
 import time
