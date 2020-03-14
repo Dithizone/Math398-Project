@@ -8,6 +8,7 @@ import numpy as np
 import time
 
 Box1withoutXAxis = pd.read_csv('data files/Box1.csv', header=None, index_col=None)
+print(Box1withoutXAxis)
 Box1 = th.attachXAxis(dataframe=Box1withoutXAxis)
 print(Box1)
-th.linePlotTheThing(dataframetoplot=Box1, columntoplot=221, xaxislabel='MeV', title='Spectrum at sensor 221', islogscale=True)
+th.linePlotTheThing(dataframetoplot=Box1, columntoplot=221, title='Spectrum at sensor 220', islogscale=True)

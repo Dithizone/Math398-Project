@@ -10,14 +10,14 @@ def makeDataFrameWithTheXAxis(dataframefilepath, thexaxisfilepath='data files/Th
     needsXAxis = pd.read_csv(filepath_or_buffer=dataframefilepath, header=None, index_col=None)
     theXAxis = pd.read_csv(filepath_or_buffer=thexaxisfilepath, index_col=None)
     hasXAxisNow = pd.concat([needsXAxis, theXAxis], axis=1)
-    hasXAxisAsIndex = hasXAxisNow.set_index('theXAxis')
+    hasXAxisAsIndex = hasXAxisNow.set_index('Energy (MeV)')
     return hasXAxisAsIndex
 
 
 def attachXAxis(dataframe, thexaxisfilepath='data files/TheXAxis.csv'):
     theXAxis = pd.read_csv(filepath_or_buffer=thexaxisfilepath, index_col=None)
     hasXAxisNow = pd.concat((dataframe, theXAxis), axis=1)
-    hasXAxisAsIndex = hasXAxisNow.set_index('theXAxis')
+    hasXAxisAsIndex = hasXAxisNow.set_index('Energy (MeV)')
     return hasXAxisAsIndex
 
 
