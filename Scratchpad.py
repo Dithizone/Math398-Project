@@ -2,24 +2,12 @@
 # Box2 + Box3 + Box4 - 2*Box1, after unnormalizing (denormalizing? Strangifying?)
 
 import pandas as pd
+import ThingsWeDoALot as th
 import matplotlib.pyplot as plt
+import numpy as np
 import time
 
-Box1 = pd.read_csv("data files/Box1.csv", header=None, index_col=None)
-del Box1[441]
-
-Box2 = pd.read_csv("data files/Box2.csv", header=None, index_col=None)
-del Box2[441]
-
-Box3 = pd.read_csv("data files/Box3.csv", header=None, index_col=None)
-del Box3[441]
-
-Box4 = pd.read_csv("data files/Box4.csv", header=None, index_col=None)
-del Box4[441]
-
-Box5 = pd.read_csv("data files/Box5.csv", header=None, index_col=None)
-
-for i in range(21):
-    Box5.plot(kind="line", y=(232+i), figsize=(8, 6), logy=True)
-    plt.show()
-    time.sleep(1.5)
+Box1withoutXAxis = pd.read_csv('data files/Box1.csv', header=None, index_col=None)
+Box1 = th.attachXAxis(dataframe=Box1withoutXAxis)
+print(Box1)
+th.linePlotTheThing(dataframetoplot=Box1, columntoplot=221, xaxislabel='MeV', title='Spectrum at sensor 221', islogscale=True)
