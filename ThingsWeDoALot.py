@@ -21,8 +21,8 @@ def attachXAxis(dataframe, thexaxisfilepath='data files/TheXAxis.csv'):
     return hasXAxisAsIndex
 
 
-def linePlotTheThing(dataframetoplot, columntoplot, title=None, titlefontsize=15, xaxislabel=None, yaxislabel=None, islogscale=False, figuredimensions=(8, 6), filepathtosavepng=None):
-    dataframetoplot.plot(kind='line', y=columntoplot, figsize=figuredimensions, logy=islogscale)
+def linePlotTheThing(dataframetoplot, columntoplot, title=None, titlefontsize=15, xaxislabel=None, yaxislabel=None, color='xkcd:cerulean blue', islogscale=False, figuredimensions=(8, 6), filepathtosavepng=None, legend=False):
+    dataframetoplot.plot(kind='line', y=columntoplot, color=color, figsize=figuredimensions, logy=islogscale, legend=legend)
     plt.xlabel(xlabel=xaxislabel)
     plt.ylabel(ylabel=yaxislabel)
     plt.title(label=title, fontsize=titlefontsize)
