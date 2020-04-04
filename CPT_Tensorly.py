@@ -1,4 +1,4 @@
-# This is a script so we can do Live Share without the weird Jupyter thing happening
+# This is assembles the tensor and decomposes it.
 
 import pandas as pd
 import numpy as np
@@ -29,19 +29,19 @@ AllBoxes = Box1List + Box2List + Box3List + Box4List
 theTensor = np.array(AllBoxes).reshape((4, 200, 441))  # The tensor, in the proper shape, that we hope to do CPT on
 # print(theTensor[0])
 theCPT = parafac(theTensor, rank=4)
-print("# of factors =",len(theCPT))    #3
-print("# of matrix =",len(theCPT[0])) #4
-print("# of row =",len(theCPT[1]))    #200
-print("# of col =",len(theCPT[2]))    #441
+print("# of factors =", len(theCPT))    # 3
+print("# of matrix =", len(theCPT[0]))  # 4
+print("# of row =", len(theCPT[1]))     # 200
+print("# of col =", len(theCPT[2]))     # 441
 #  theCPT[feature][row][col]
 # print('feature 1:\n',theCPT[2][3][3])
 # print(theCPT[0])
 # y = [1,2,3,4]
 plt.close()
-plt.plot(theCPT[1],label = 'KUT')
-plt.plot(theCPT[1], label = 'Tech-99')
-plt.plot(theCPT[1], label = 'Cobalt-60')
-plt.plot(theCPT[1], label = 'Cesium-137')
+plt.plot(theCPT[1], label='KUT')
+plt.plot(theCPT[1], label='Tech-99')
+plt.plot(theCPT[1], label='Cobalt-60')
+plt.plot(theCPT[1], label='Cesium-137')
 
 # plt.plot(theCPT[1], label=['cat', 'dog','fish','chicken'] )
 plt.legend()
