@@ -10,4 +10,9 @@ import tensorflow as tf
 import ThingsWeDoALot as th
 
 SpectraMatrix = th.makeDataFrameWithTheXAxis(dataframefilepath='data files/SpectraMatrix.csv')
-print(SpectraMatrix)
+
+datalist = [x for x in range(27)]
+print(datalist)
+
+exampleTensor = tf.constant(datalist, shape=(3, 3, 3))
+tf.print(exampleTensor)
