@@ -1,7 +1,7 @@
 # PNNL-Project
   Welcome to the GitHub repository for the PNNL Project at CSU Channel Islands! Quite a few files have been generated so far and this README will serve as an introduction to what they are.
   
-  ## What's in *data files* and *Historical*?
+  ## What's in *data files* and *historical*?
   
   First, **SpectraMatrix.csv** is the data provided by Dr. Aaron Luttman, with 200 rows corresponding to radiation energies and 1764 columns corresponding to each sensor in four 21-by-21 arrays (21x21x4=1764), where each "box" of 21-by-21 contains a different radiation source &mdash; Cobalt-60, Cesium-137, Technetium-99, and the KUT background &mdash; at its center. The file **SpectraMatrixWithXAxis.csv** is identical to SpectraMatrix.csv, except that the first column is x-values from 0.05 to 2.0 MeV for ease of graphing.
   
