@@ -5,6 +5,10 @@
 # it might be interesting to employ the GPU to do calculations
 # really really fast.
 
+# Update (2020.4.4): Let's try un-normalizing then renormalizing the
+# Box data and truncating to remove the floating point errors, then
+# just stack the boxes to make the tensor.
+
 import pandas as pd
 import ThingsWeDoALot as th
 import matplotlib.pyplot as plt
