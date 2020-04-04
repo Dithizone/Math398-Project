@@ -1,5 +1,6 @@
 # It'd be so awesome to write functions here which we can call
 # in other files or notebooks! Let's see if it can be done.
+# TODO: Write docstrings for all of these function.
 
 import pandas as pd
 import matplotlib.pyplot as plt
