@@ -1,34 +1,27 @@
-# TensorFlow can use CUDA 10.1 to accelerate tensor stuff using
-# the GPU. Currently it lags a bit when the code runs because
-# the library is searching for CUDA stuff and can't find it,
-# so switches to CPU instead. If we start doing crazy stuff,
-# it might be interesting to employ the GPU to do calculations
-# really really fast.
+# This is a scratchpad for doing quick operations.
 
-# Update (2020.4.4): Let's try un-normalizing then renormalizing the
-# Box data and truncating to remove the floating point errors, then
-# just stack the boxes to make the tensor.
+# Most recently (2020.4.12) this was used to create some ideal
+# spectra for the midterm presentation.
 
 import pandas as pd
 import ThingsWeDoALot as th
 import matplotlib.pyplot as plt
 import numpy as np
 import time
-import tensorflow as tf
 
+thecenters = [880, 881, 882, 883]
+cobaltROM = [1, 617, 705, 881]
 SpectraMatrix = th.makeDataFrameWithTheXAxis(dataframefilepath='data files/SpectraMatrix.csv')
 
-thetensor = tf.constant([
-    [[1, 2, 3],
-     [4, 5, 6],
-     [7, 8, 9]],
-    [[10, 11, 12],
-     [13, 14, 15],
-     [16, 17, 18]],
-    [[19, 20, 21],
-     [22, 23, 24],
-     [25, 26, 27]]])
 
-tf.print(thetensor)
-tf.print(thetensor.shape)
+for i in cobaltROM:
+    th.linePlotTheThing(SpectraMatrix,
+                        i,
+                        f'Sensor #{i}',
+                        xaxislabel='Photon Energy (MeV)',
+                        yaxislabel='Normalized Photon Frequency',
+                        color='xkcd:cerulean blue',
+                        islogscale=True,
+                        figuredimensions=(4.5, 4.5))
+
 
