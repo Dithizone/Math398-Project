@@ -13,7 +13,7 @@ import time
 
 thecenters = [880, 881, 882, 883]
 cobaltROM = [1, 617, 705, 881]
-PCsWeWant = [0, 1, 2]
+PCsWeWant = [2, 3, 4]
 SpectraMatrix = th.makeDataFrameWithTheXAxis(dataframefilepath='data files/SpectraMatrix.csv')
 
 x = StandardScaler().fit_transform(SpectraMatrix.loc[:, :].values)
@@ -30,7 +30,7 @@ plt.title('SpectraMatrix Principal Components', fontsize=15)
 for j in PCsWeWant:
     plt.plot(princicalDataframeWXAxis.iloc[:, j], label=f'Principal Component {j + 1}')
 plt.legend()
-th.saveThisGraph('images/midtermPresentation/PC123.png')
+# th.saveThisGraph('images/midtermPresentation/PC235.png')
 plt.show()
 
 # for i in cobaltROM:
