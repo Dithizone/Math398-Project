@@ -109,6 +109,7 @@ plt.close()
 modelSpectraMatrix = NMF(n_components=4, init='random', solver='cd', beta_loss=2, tol=1e-10)
 WSpectraMatrix = modelSpectraMatrix.fit_transform(SpectraMatrix)
 HSpectraMatrix = modelSpectraMatrix.components_
+WSpectraMatrixDataFrame = pd.DataFrame(data=WSpectraMatrix)
 HSpectraMatrixDataFrame = pd.DataFrame(data=HSpectraMatrix)
 
 plt.figure(figsize=(15, 9))
@@ -186,3 +187,12 @@ plt.legend(fontsize=14)
 # th.saveThisGraph('images/subplots/theSpectra.png')
 plt.show()
 plt.close()
+
+# -------  X - W*H -------
+numpyW = WSpectraMatrixDataFrame.to_numpy()
+numpyH = HSpectraMatrixDataFrame.to_numpy()
+numpySpectra = SpectraMatrix.to_numpy()
+
+print(numpySpectra - np.matmul(numpyW, numpyH))
+
+# TODO: Do Frobenius norm of this thing ^^
