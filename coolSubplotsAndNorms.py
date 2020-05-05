@@ -1,8 +1,8 @@
 # This used to be a scratchpad but we used it for something
 # cool that's worth saving as a dedicated script.
 
-# Most recently (2020.4.28) this was used to create some ideal
-# spectra for the midterm presentation.
+# Most recently (2020.05.05) this was used to determine norms
+# and perform reconstructions.
 
 import pandas as pd
 import ThingsWeDoALot as th
@@ -11,6 +11,9 @@ from sklearn.decomposition import PCA, NMF
 from sklearn.preprocessing import StandardScaler
 import numpy as np
 import time
+from numpy.linalg import norm
+import tensorly as tl
+from tensorly.decomposition import non_negative_parafac
 
 thecenters = [880, 881, 882, 883]
 cobaltROM = [1, 617, 705, 881]
@@ -22,7 +25,7 @@ x = StandardScaler().fit_transform(SpectraMatrix.loc[:, :].values)
 pca = PCA(n_components=10).fit(x)
 principalComponents = pca.fit_transform(x)
 principalDataframe = pd.DataFrame(data=principalComponents)
-princicalDataframeWXAxis = th.attachXAxis(principalDataframe)
+principalDataframeWXAxis = th.attachXAxis(principalDataframe)
 
 # ------- The PCA Subplots --------
 plt.figure(figsize=(15, 6))
@@ -31,14 +34,14 @@ plt.subplot(1, 2, 1)
 plt.xlabel('Photon Energy (MeV)', fontsize=13)
 plt.ylabel('Value in Principal Component', fontsize=13)
 plt.title('Principal Component 1 of Spectra Data Set', fontsize=15)
-plt.plot(princicalDataframeWXAxis.iloc[:, 0], label=f'Principal Component 1')
+plt.plot(principalDataframeWXAxis.iloc[:, 0], label=f'Principal Component 1')
 
 plt.subplot(1, 2, 2)
 plt.xlabel('Photon Energy (MeV)', fontsize=13)
 plt.title('Principal Components 3, 4, and 5', fontsize=15)
 
 for j in PCsWeWant:
-    plt.plot(princicalDataframeWXAxis.iloc[:, j], label=f'Principal Component {j + 1}')
+    plt.plot(principalDataframeWXAxis.iloc[:, j], label=f'Principal Component {j + 1}')
 plt.legend()
 # th.saveThisGraph('images/subplots/PC1235.png')
 plt.show()
@@ -188,11 +191,66 @@ plt.legend(fontsize=14)
 plt.show()
 plt.close()
 
+# ------- Doing CPT -------
+Box1List = []
+Box2List = []
+Box3List = []
+Box4List = []
+
+SpectraMatrixRows = open('data files/SpectraMatrix.csv', 'r').read().split(sep='\n')
+for row in SpectraMatrixRows:
+    entry = row.split(sep=',')
+    for i in range(441):
+        column = i * 4
+        Box1List.append(float(entry[column]))
+        Box2List.append(float(entry[column + 1]))
+        Box3List.append(float(entry[column + 2]))
+        Box4List.append(float(entry[column + 3]))
+
+# Creating AllBoxes, which is a huge list of all SpectraMatrix data for easy tensor creation
+AllBoxes = Box1List + Box2List + Box3List + Box4List
+
+theTensor = np.array(AllBoxes).reshape((4, 200, 441))  # The tensor, in the proper shape, that we hope to do CPT on
+
+theCPT = non_negative_parafac(theTensor, rank=4)  # The CPT decomposition
+
+# ------- The Norms of the original dataset -------
+frobeniusNormOfOriginalData = norm(SpectraMatrix, ord='fro')
+L1NormOfOriginalData = norm(SpectraMatrix, ord=1)
+L2NormOfOriginalData = norm(SpectraMatrix, ord=2)
+
+frobeniusNormOftheTensor = norm(theTensor, ord='fro', axis=(1, 2))
+L1NormOftheTensor = norm(theTensor, ord=1, axis=(1, 2))
+L2NormOftheTensor = norm(theTensor, ord=2, axis=(1, 2))
+
 # -------  X - W*H -------
 numpyW = WSpectraMatrixDataFrame.to_numpy()
 numpyH = HSpectraMatrixDataFrame.to_numpy()
 numpySpectra = SpectraMatrix.to_numpy()
+reconstructedNMF = np.matmul(numpyW, numpyH)
+frobeniusNormOfreconstructedNMF = norm(reconstructedNMF, ord='fro')
+L1NormOfreconstructedNMF = norm(reconstructedNMF, ord=1)
+L2NormOfreconstructedNMF = norm(reconstructedNMF, ord=2)
 
-print(numpySpectra - np.matmul(numpyW, numpyH))
+# ------- CPT reconstruction
+reconstructedCPT = tl.kruskal_to_tensor(theCPT)
+frobeniusNormOfreconstructedCPT = norm(reconstructedCPT, ord='fro', axis=(1, 2))
+L1NormOfreconstructedCPT = norm(reconstructedCPT, ord=1, axis=(1, 2))
+L2NormOfreconstructedCPT = norm(reconstructedCPT, ord=2, axis=(1, 2))
 
-# TODO: Do Frobenius norm of this thing ^^
+# ------- All the norms -------
+print(f'Frobenius Norms:')
+print(f'Original: {frobeniusNormOfOriginalData}\n'
+      f'NMF: {frobeniusNormOfreconstructedNMF}\n'
+      f'Original Tensor: {frobeniusNormOftheTensor}\n'
+      f'CPT: {frobeniusNormOfreconstructedCPT}\n')
+print(f'L1 Norms:')
+print(f'Original: {L1NormOfOriginalData}\n'
+      f'NMF: {L1NormOfreconstructedNMF}\n'
+      f'Original Tensor: {frobeniusNormOftheTensor}\n'
+      f'CPT: {L1NormOfreconstructedCPT}\n')
+print(f'L2 Norms:')
+print(f'Original: {L2NormOfOriginalData}\n'
+      f'NMF: {L2NormOfreconstructedNMF}\n'
+      f'Original Tensor: {frobeniusNormOftheTensor}\n'
+      f'CPT: {L2NormOfreconstructedCPT}\n')
