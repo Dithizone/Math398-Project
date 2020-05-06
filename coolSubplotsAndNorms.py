@@ -43,7 +43,7 @@ plt.title('Principal Components 3, 4, and 5', fontsize=15)
 for j in PCsWeWant:
     plt.plot(principalDataframeWXAxis.iloc[:, j], label=f'Principal Component {j + 1}')
 plt.legend()
-th.saveThisGraph('images/subplots/PC1235.png')
+# th.saveThisGraph('images/subplots/PC1235.png')
 plt.show()
 
 plt.close()
@@ -103,7 +103,7 @@ plt.xlabel('Photon Energy (MeV)', fontsize=13)
 plt.plot(WSpectraMatrixByBoxesDataFrame.iloc[:, 3], label=f'Column 4', color='orange')
 plt.legend()
 
-th.saveThisGraph('images/subplots/WMatrix.png')
+# th.saveThisGraph('images/subplots/WMatrix.png')
 plt.show()
 plt.close()
 
@@ -146,7 +146,7 @@ plt.xlabel('Photon Energy (MeV)', fontsize=13)
 plt.plot(HSpectraMatrixDataFrame.iloc[3, :], label=f'Row 4', color='xkcd:cerulean blue')
 plt.legend()
 
-th.saveThisGraph('images/subplots/HMatrix.png')
+# th.saveThisGraph('images/subplots/HMatrix.png')
 plt.show()
 plt.close()
 
@@ -187,7 +187,7 @@ plt.plot(SpectraMatrix.iloc[:, thecenters[3]], label=f'Technetium-99m', color='g
 plt.yscale('log')
 plt.legend(fontsize=14)
 
-th.saveThisGraph('images/subplots/theSpectra.png')
+# th.saveThisGraph('images/subplots/theSpectra.png')
 plt.show()
 plt.close()
 
@@ -253,7 +253,8 @@ L2NormOfreconstructedCPT = norm(reconstructedCPT, ord=2, axis=(1, 2))
 print(f'----- Frobenius Norms -----')
 print(f'Before PCA (after scaling): {frobeniusNormAfterScaling}, After PCA: {frobeniusNormOfreconstructedPCA}\n'
       f'Before NMF (original data): {frobeniusNormOfOriginalData}, After NMF: {frobeniusNormOfreconstructedNMF}\n'
-      f'Before CPT (as tensor): {frobeniusNormOftheTensor}, After CPT: {frobeniusNormOfreconstructedCPT}\n')
+      f'Before CPT (as tensor): {frobeniusNormOftheTensor}, After CPT: {frobeniusNormOfreconstructedCPT}\n'
+      f'Before CPT (from MATLAB): 1.5889e-05, After CPT (rank 5): 1.5695e-05, After CPT (rank 8): 1.5777e-05\n')
 print(f'----- L1 Norms -----')
 print(f'Before PCA (after scaling): {L1NormAfterScaling}, After PCA: {L1NormOfreconstructedPCA}\n'
       f'Before NMF (original data): {L1NormOfOriginalData}, After NMF: {L1NormOfreconstructedNMF}\n'
