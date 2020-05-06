@@ -51,7 +51,7 @@ def linePlotTheThing(dataframetoplot,
     return plt.show()
 
 
-def saveThisGraph(filepathtosavepng):
+def saveThisGraph(filepathtosavepng, dpi=600):
     plt.savefig(fname=filepathtosavepng, bbox_inches='tight', orientation="landscape", pad_inches=0.2, dpi=600)
     return print('Graph saved!')
 
