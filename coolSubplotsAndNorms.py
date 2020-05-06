@@ -23,7 +23,7 @@ SpectraMatrix = th.makeDataFrameWithTheXAxis(dataframefilepath='data files/Spect
 # Doing PCA on our data
 x = StandardScaler().fit_transform(SpectraMatrix.loc[:, :].values)
 pca = PCA(n_components=10).fit(x)
-principalComponents = pca.fit_transform(x)
+principalComponents = pca.transform(x)
 principalDataframe = pd.DataFrame(data=principalComponents)
 principalDataframeWXAxis = th.attachXAxis(principalDataframe)
 
@@ -215,6 +215,10 @@ theTensor = np.array(AllBoxes).reshape((4, 200, 441))  # The tensor, in the prop
 theCPT = non_negative_parafac(theTensor, rank=4)  # The CPT decomposition
 
 # ------- The Norms of the original dataset -------
+frobeniusNormAfterScaling = norm(x, ord='fro')
+L1NormAfterScaling = norm(x, ord=1)
+L2NormAfterScaling = norm(x, ord=2)
+
 frobeniusNormOfOriginalData = norm(SpectraMatrix, ord='fro')
 L1NormOfOriginalData = norm(SpectraMatrix, ord=1)
 L2NormOfOriginalData = norm(SpectraMatrix, ord=2)
@@ -222,6 +226,13 @@ L2NormOfOriginalData = norm(SpectraMatrix, ord=2)
 frobeniusNormOftheTensor = norm(theTensor, ord='fro', axis=(1, 2))
 L1NormOftheTensor = norm(theTensor, ord=1, axis=(1, 2))
 L2NormOftheTensor = norm(theTensor, ord=2, axis=(1, 2))
+
+# ------- Undoing PCA -------
+reconstructedPCA = pca.inverse_transform(principalDataframe)  # Doesn't quite seem right...
+
+frobeniusNormOfreconstructedPCA = norm(reconstructedPCA, ord='fro')
+L1NormOfreconstructedPCA = norm(reconstructedPCA, ord=1)
+L2NormOfreconstructedPCA = norm(reconstructedPCA, ord=2)
 
 # -------  X - W*H -------
 numpyW = WSpectraMatrixDataFrame.to_numpy()
@@ -239,18 +250,15 @@ L1NormOfreconstructedCPT = norm(reconstructedCPT, ord=1, axis=(1, 2))
 L2NormOfreconstructedCPT = norm(reconstructedCPT, ord=2, axis=(1, 2))
 
 # ------- All the norms -------
-print(f'Frobenius Norms:')
-print(f'Original: {frobeniusNormOfOriginalData}\n'
-      f'NMF: {frobeniusNormOfreconstructedNMF}\n'
-      f'Original Tensor: {frobeniusNormOftheTensor}\n'
-      f'CPT: {frobeniusNormOfreconstructedCPT}\n')
-print(f'L1 Norms:')
-print(f'Original: {L1NormOfOriginalData}\n'
-      f'NMF: {L1NormOfreconstructedNMF}\n'
-      f'Original Tensor: {frobeniusNormOftheTensor}\n'
-      f'CPT: {L1NormOfreconstructedCPT}\n')
-print(f'L2 Norms:')
-print(f'Original: {L2NormOfOriginalData}\n'
-      f'NMF: {L2NormOfreconstructedNMF}\n'
-      f'Original Tensor: {frobeniusNormOftheTensor}\n'
-      f'CPT: {L2NormOfreconstructedCPT}\n')
+print(f'----- Frobenius Norms -----')
+print(f'Before PCA (after scaling): {frobeniusNormAfterScaling}, After PCA: {frobeniusNormOfreconstructedPCA}\n'
+      f'Before NMF (original data): {frobeniusNormOfOriginalData}, After NMF: {frobeniusNormOfreconstructedNMF}\n'
+      f'Before CPT (as tensor): {frobeniusNormOftheTensor}, After CPT: {frobeniusNormOfreconstructedCPT}\n')
+print(f'----- L1 Norms -----')
+print(f'Before PCA (after scaling): {L1NormAfterScaling}, After PCA: {L1NormOfreconstructedPCA}\n'
+      f'Before NMF (original data): {L1NormOfOriginalData}, After NMF: {L1NormOfreconstructedNMF}\n'
+      f'Before CPT (as tensor): {L1NormOftheTensor}, After CPT: {L1NormOfreconstructedCPT}\n')
+print(f'----- L2 Norms -----')
+print(f'Before PCA (after scaling): {L2NormAfterScaling}, After PCA: {L2NormOfreconstructedPCA}\n'
+      f'Before NMF (original data): {L2NormOfOriginalData}, After NMF: {L2NormOfreconstructedNMF}\n'
+      f'Before CPT (as tensor): {L2NormOftheTensor}, After CPT: {L2NormOfreconstructedCPT}\n')
