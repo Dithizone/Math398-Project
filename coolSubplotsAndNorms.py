@@ -214,6 +214,90 @@ theTensor = np.array(AllBoxes).reshape((4, 200, 441))  # The tensor, in the prop
 
 theCPT = non_negative_parafac(theTensor, rank=4)  # The CPT decomposition
 
+matlab5factor1 = pd.read_csv('data files/factor1rank5Matlab.csv', header=None)
+matlab5factor2 = pd.read_csv('data files/factor2rank5Matlab.csv', header=None)
+matlab5factor3 = pd.read_csv('data files/factor3rank5Matlab.csv', header=None)
+matlab8factor1 = pd.read_csv('data files/factor1rank8Matlab.csv', header=None)
+matlab8factor2 = pd.read_csv('data files/factor2rank8Matlab.csv', header=None)
+matlab8factor3 = pd.read_csv('data files/factor3rank8Matlab.csv', header=None)
+
+# ------- Cool subplots of the MATLAB CPT -------
+
+plt.figure(figsize=(15, 9))
+plt.suptitle('Factor 2 After CP Tensor Decomposition.')
+
+plt.subplot(2, 3, 1)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor2.iloc[:, 0], label=f'Column 1', color='xkcd:cerulean blue')
+plt.legend(fontsize=14)
+
+plt.subplot(2, 3, 2)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor2.iloc[:, 1], label=f'Column 2', color='xkcd:cerulean blue')
+plt.legend(fontsize=14)
+
+plt.subplot(2, 3, 4)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor2.iloc[:, 2], label=f'Column 3', color='blue')
+plt.legend(fontsize=14)
+
+plt.subplot(2, 3, 5)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor2.iloc[:, 3], label=f'Column 4', color='orange')
+plt.legend(fontsize=14)
+
+plt.subplot(2, 3, 6)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor2.iloc[:, 4], label=f'Column 5', color='green')
+plt.legend(fontsize=14)
+
+# th.saveThisGraph('images/subplots/factor2matlabrank5.png')
+plt.show()
+plt.close()
+
+
+plt.figure(figsize=(15, 9))
+plt.suptitle('Factor 3 After CP Tensor Decomposition.')
+
+plt.subplot(2, 3, 1)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor3.iloc[:, 0], label=f'Column 1', color='xkcd:cerulean blue')
+plt.legend(fontsize=14)
+
+plt.subplot(2, 3, 2)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor3.iloc[:, 1], label=f'Column 2', color='xkcd:cerulean blue')
+plt.legend(fontsize=14)
+
+plt.subplot(2, 3, 4)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor3.iloc[:, 2], label=f'Column 3', color='blue')
+plt.legend(fontsize=14)
+
+plt.subplot(2, 3, 5)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor3.iloc[:, 3], label=f'Column 4', color='orange')
+plt.legend(fontsize=14)
+
+plt.subplot(2, 3, 6)
+# plt.xlabel('Photon Energy (MeV)', fontsize=13)
+# plt.ylabel('Value After Decomposition', fontsize=13)
+plt.plot(matlab5factor3.iloc[:, 4], label=f'Column 5', color='green')
+plt.legend(fontsize=14)
+
+# th.saveThisGraph('images/subplots/factor3matlabrank5.png')
+plt.show()
+plt.close()
+
 # ------- The Norms of the original dataset -------
 frobeniusNormAfterScaling = norm(x, ord='fro')
 L1NormAfterScaling = norm(x, ord=1)
