@@ -103,7 +103,7 @@ plt.subplot(2, 2, 4)
 plt.plot(WSpectraMatrixByBoxesDataFrame.iloc[:, 3], label=f'Column 4', color='blue')
 plt.legend()
 
-th.saveThisGraph('images/subplots/WMatrix.png')
+# th.saveThisGraph('images/subplots/WMatrix.png')
 plt.show()
 plt.close()
 
