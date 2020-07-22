@@ -21,11 +21,13 @@ PCsWeWant = [2, 3, 4]
 SpectraMatrix = th.makeDataFrameWithTheXAxis(dataframefilepath='data files/SpectraMatrix.csv')
 
 # Doing PCA on our data
+prePCA = time.time()
 x = StandardScaler().fit_transform(SpectraMatrix.loc[:, :].values)
 pca = PCA(n_components=10).fit(x)
 principalComponents = pca.transform(x)
 principalDataframe = pd.DataFrame(data=principalComponents)
 principalDataframeWXAxis = th.attachXAxis(principalDataframe)
+postPCA = time.time()
 
 # ------- The PCA Subplots --------
 plt.figure(figsize=(15, 6))
@@ -62,6 +64,8 @@ plt.close()
 # ------- The NMF W Matrix Graphs
 
 SpectraMatrixByBoxes = th.makeDataFrameWithTheXAxis(dataframefilepath='data files/SpectraMatrixByBoxes.csv')
+
+preNMFW = time.time()
 modelSpectraMatrixByBoxes = NMF(n_components=4, init='random', solver='cd', beta_loss=2, tol=1e-10)
 WSpectraMatrixByBoxes = modelSpectraMatrixByBoxes.fit_transform(SpectraMatrixByBoxes)
 HSpectraMatrixByBoxes = modelSpectraMatrixByBoxes.components_
@@ -71,6 +75,7 @@ WSpectraMatrixByBoxesDataFrame = th.attachXAxis(dataframe=WSpectraMatrixByBoxesD
 
 HSpectraMatrixByBoxesDataFrame = pd.DataFrame(data=HSpectraMatrixByBoxes)
 # HSpectraMatrixByBoxesDataFrame = th.attachXAxis(dataframe=HSpectraMatrixByBoxesDataFrame)
+postNMFW = time.time()
 
 plt.figure(figsize=(15, 9))
 plt.suptitle('W Matrix of Spectra Data Set', fontsize=22)
@@ -109,11 +114,13 @@ plt.close()
 
 # ------- The NMF H Matrix Graphs -------
 
+preNMFH = time.time()
 modelSpectraMatrix = NMF(n_components=4, init='random', solver='cd', beta_loss=2, tol=1e-10)
 WSpectraMatrix = modelSpectraMatrix.fit_transform(SpectraMatrix)
 HSpectraMatrix = modelSpectraMatrix.components_
 WSpectraMatrixDataFrame = pd.DataFrame(data=WSpectraMatrix)
 HSpectraMatrixDataFrame = pd.DataFrame(data=HSpectraMatrix)
+postNMFH = time.time()
 
 plt.figure(figsize=(15, 9))
 plt.suptitle('H Matrix of Spectra Data Set', fontsize=22)
@@ -160,6 +167,7 @@ plt.subplot(2, 2, 1)
 # plt.ylabel('Normalized Frequency of Detected Photons', fontsize=13)
 # plt.title(' ', fontsize=40)
 plt.plot(SpectraMatrix.iloc[:, thecenters[0]], label=f'Background', color='xkcd:cerulean blue')
+# plt.plot(SpectraMatrix.iloc[:, thecenters[0]], color='xkcd:cerulean blue')
 plt.yscale('log')
 plt.legend(fontsize=14)
 
@@ -168,6 +176,7 @@ plt.subplot(2, 2, 2)
 # plt.ylabel('Value After Decomposition', fontsize=13)
 # plt.title(' ', fontsize=40)
 plt.plot(SpectraMatrix.iloc[:, thecenters[1]], label=f'Cobalt-60')
+# plt.plot(SpectraMatrix.iloc[:, thecenters[1]])
 plt.yscale('log')
 plt.legend(fontsize=14)
 
@@ -176,6 +185,7 @@ plt.xlabel('Photon Energy (MeV)', fontsize=13)
 plt.ylabel('Normalized Frequency of Detected Photons', fontsize=13)
 # plt.title('W Matrix Column 3', fontsize=15)
 plt.plot(SpectraMatrix.iloc[:, thecenters[2]], label=f'Cesium-137', color='orange')
+# plt.plot(SpectraMatrix.iloc[:, thecenters[2]], color='orange')
 plt.yscale('log')
 plt.legend(fontsize=14)
 
@@ -184,10 +194,12 @@ plt.subplot(2, 2, 4)
 # plt.ylabel('Value After Decomposition', fontsize=13)
 # plt.title('W Matrix Column 4', fontsize=15)
 plt.plot(SpectraMatrix.iloc[:, thecenters[3]], label=f'Technetium-99m', color='green')
+# plt.plot(SpectraMatrix.iloc[:, thecenters[3]], color='green')
 plt.yscale('log')
 plt.legend(fontsize=14)
 
 # th.saveThisGraph('images/subplots/theSpectra.png')
+# th.saveThisGraph('images/subplots/theSpectraNoLabels.png')
 plt.show()
 plt.close()
 
@@ -349,3 +361,11 @@ print(f'----- L2 Norms -----')
 print(f'Before PCA (after scaling): {L2NormAfterScaling}, After PCA: {L2NormOfreconstructedPCA}\n'
       f'Before NMF (original data): {L2NormOfOriginalData}, After NMF: {L2NormOfreconstructedNMF}\n'
       f'Before CPT (as tensor): {L2NormOftheTensor}, After CPT: {L2NormOfreconstructedCPT}\n')
+
+# ------- Computation times -------
+print(f'----- Computation time -----')
+print(f'PCA: {postPCA - prePCA}\n'
+      f'NMF W: {postNMFW - preNMFW}\n'
+      f'NMF H: {postNMFH - preNMFH}\n'
+      f'NMF total: {postNMFH + postNMFW - preNMFW - preNMFH}')
+
